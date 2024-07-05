@@ -14,17 +14,25 @@ namespace PlanningAPI.Repository
         }
         public async Task<List<Worker>> Get()
         {
-            return await _dbContext.Workers.AsNoTracking().ToListAsync();
+            return await _dbContext.Workers.
+                AsNoTracking().
+                ToListAsync();
         }
 
-        public async Task<List<Worker>> GetWithPositions()
+        public async Task<List<Worker>> GetWithDepartmentsPositions()
         {
-            return await _dbContext.Workers.AsNoTracking().Include(c => c.PositionNavigation).ToListAsync();
+            return await _dbContext.Workers.
+                AsNoTracking().
+                Include(c => c.PositionNavigation).
+                Include(c => c.DepartmentNavigation).
+                ToListAsync();
         }
 
         public async Task<Worker?> GetById(int id)
         {
-            return await _dbContext.Workers.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+            return await _dbContext.Workers.
+                AsNoTracking().
+                FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }

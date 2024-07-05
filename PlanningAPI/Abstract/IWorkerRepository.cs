@@ -6,6 +6,6 @@ namespace PlanningAPI.Abstract
     {
         Task<List<Worker>> Get();
         Task<Worker?> GetById(int id);
-        Task<List<Worker>> GetWithPositions();
+        Task<List<Worker>> GetWithDepartmentsPositions();
     }
 }

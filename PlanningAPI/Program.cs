@@ -15,6 +15,9 @@ builder.Services.AddDbContext<PlanningDbContext>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IWorkerRepository, WorkerRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IWorkerPositionRepository, WorkerPositionRepository>();
+
 
 var app = builder.Build();
 

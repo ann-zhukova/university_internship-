@@ -19,7 +19,7 @@ namespace PlanningAPI.Repository
 
         public async Task<List<PlanningAPI.Models.Task>> GetWithWorkers()
         {
-            return await _dbContext.Tasks.AsNoTracking().Include(c => c.Workers).ToListAsync();
+            return await _dbContext.Tasks.AsNoTracking().Include(c => c.Workers).Include(c => c.DependsontaskNavigation).Include(c=>c.ProjectNavigation).ToListAsync();
         }
 
         public async Task<PlanningAPI.Models.Task?> GetById(int id)
