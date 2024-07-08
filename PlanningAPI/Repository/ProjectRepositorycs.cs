@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlanningAPI.Abstract;
+using PlanningAPI.Contract;
 using PlanningAPI.Models;
 
 namespace PlanningAPI.Repository
@@ -27,16 +28,27 @@ namespace PlanningAPI.Repository
             return await _dbContext.Projects.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async System.Threading.Tasks.Task Create(int id, string name, bool status)
+        public async System.Threading.Tasks.Task Create(ProjectRequest projectRequest)
         {
             var project = new Project
             {
-                Id = id,
-                Name = name,
-                Status = status
+                Name = projectRequest.name,
+                Status = projectRequest.status
             };
             await _dbContext.Projects.AddAsync(project);
             await _dbContext.SaveChangesAsync();
+        }
+        public async System.Threading.Tasks.Task Update(int id, ProjectRequest projectRequest)
+        {
+            await _dbContext.Projects.Where(p => p.Id == id).ExecuteUpdateAsync(
+                s => s.
+                SetProperty(p => p.Name, p => projectRequest.name).
+                SetProperty(p => p.Status, p => projectRequest.status)
+                );
+        }
+        public async System.Threading.Tasks.Task Delete(int id)
+        {
+            await _dbContext.Projects.Where(p => p.Id == id).ExecuteDeleteAsync();
         }
     }
 }

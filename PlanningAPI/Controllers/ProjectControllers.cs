@@ -28,5 +28,45 @@ namespace PlanningAPI.Controllers
             var response = projects.Select(p => new ProjectResponse(p.Id, p.Name, p.Status));
             return Ok(response);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> CreateProject([FromForm]ProjectRequest projectRequest)
+        {
+            try
+            {
+                await _projectRepository.Create(projectRequest);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> UpdateProject(int id, [FromForm] ProjectRequest projectRequest)
+        {
+            try
+            {
+                await _projectRepository.Update(id, projectRequest);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> UpdateProject(int id)
+        {
+            try
+            {
+                await _projectRepository.Delete(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

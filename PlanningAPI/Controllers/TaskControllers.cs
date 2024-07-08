@@ -34,5 +34,47 @@ namespace PlanningAPI.Controllers
                 );
             return Ok(response);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateTask([FromForm]TaskRequest taskRequest)
+        {
+            try
+            {
+                await _taskRepository.Create(taskRequest);
+                return Ok();
+            }
+            catch (Exception ex)
+            { 
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> UpdateTask(int id, [FromForm] TaskRequest taskRequest)
+        {
+            try
+            {
+                await _taskRepository.Update(id, taskRequest);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> DeleteTask(int id)
+        {
+            try
+            {
+                await _taskRepository.Delete( id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+ 
     }
 }
