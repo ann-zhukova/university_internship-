@@ -1,9 +1,7 @@
 interface Props {
     name : string;
-    position: string;
-    department: string;
 }
-export const CardTitle = ({name, position, department}:Props) =>{
+export const CardTitle = ({name}:Props) =>{
     return (
         <div style = {{
             display :"flex", 
@@ -12,8 +10,6 @@ export const CardTitle = ({name, position, department}:Props) =>{
             justifyContent:"space-between",
         }}>
         <p> {name}</p>
-        <p>{position}</p>
-        <p> {department}</p>
         </div>
     );
 };

@@ -10,10 +10,11 @@ export const Workers = ({workers}:Props) =>{
             {workers.map((worker: Worker) => (
                 <Card 
                     key={worker.id} 
-                    title = {<CardTitle name = {worker.name} position={worker.position} department={worker.department}/>}
+                    title = {<CardTitle name = {worker.name} />}
                     bordered = {false}
                 >
-                <p>описание</p>
+                <p>Должность: {worker.position}</p>
+                <p>Подразделение: {worker.department}</p>
                 </Card>
 ))}
         </div>
