@@ -1,12 +1,12 @@
 import  Card  from "antd/es/card/Card"
 import { CardTitle } from "./CardTitle"
-
+import  Button  from "antd/es/button/button";
 interface Props{
     tasks:Task[]
 }
 export const Tasks = ({tasks}:Props) =>{
     return (
-        <div>
+        <div className="cards">
             {tasks.map((task: Task) => (
                 <Card 
                     key={task.id} 
@@ -20,6 +20,21 @@ export const Tasks = ({tasks}:Props) =>{
                 {task.workers.length != 0 && <p>Исполнители:  {task.workers.join(', ')}</p>}
                 {task.dependsOnTask && <p>Зависит от задачи: {task.dependsOnTask}</p>}
                 <p>Статус: {task.status ? 'Закончен' : 'В работе'}</p>
+                <div className="card_buttons">
+                    <Button 
+                        //onClick={()=>handleOpen(project)}
+                        style = {{flex:1}}
+                    >
+                        Изменить
+                    </Button>
+                    <Button
+                        //onClick={()=>handleDelete(project.id)}
+                        style = {{flex:1}}
+                        danger
+                    >
+                        Удалить
+                    </Button>
+                </div>
                 </Card>
 ))}
         </div>

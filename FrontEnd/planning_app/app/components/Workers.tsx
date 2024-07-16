@@ -6,7 +6,7 @@ interface Props{
 }
 export const Workers = ({workers}:Props) =>{
     return (
-        <div>
+        <div className="cards">
             {workers.map((worker: Worker) => (
                 <Card 
                     key={worker.id} 
