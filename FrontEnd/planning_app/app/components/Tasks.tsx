@@ -3,8 +3,10 @@ import { CardTitle } from "./CardTitle"
 import  Button  from "antd/es/button/button";
 interface Props{
     tasks:Task[]
+    handleDelete: (id:number)=>void;
+    handleOpen:(task:Task)=> void;
 }
-export const Tasks = ({tasks}:Props) =>{
+export const Tasks = ({tasks, handleOpen, handleDelete}:Props) =>{
     return (
         <div className="cards">
             {tasks.map((task: Task) => (
@@ -22,13 +24,13 @@ export const Tasks = ({tasks}:Props) =>{
                 <p>Статус: {task.status ? 'Закончен' : 'В работе'}</p>
                 <div className="card_buttons">
                     <Button 
-                        //onClick={()=>handleOpen(project)}
+                        onClick={()=>handleOpen(task)}
                         style = {{flex:1}}
                     >
                         Изменить
                     </Button>
                     <Button
-                        //onClick={()=>handleDelete(project.id)}
+                        onClick={()=>handleDelete(task.id)}
                         style = {{flex:1}}
                         danger
                     >
