@@ -10,11 +10,13 @@ export default function ProjectPage(){
     const defultValues = {
         name :"",
         status: false,
+        numberOfTask: 0,
     }as Project;
 
     const [values, setValues] = useState<Project>({
         name :"",
         status: false,
+        numberOfTask: 0,
     } as Project);
 
     const [projects, setProjects] = useState<Project[]>([]);
@@ -70,7 +72,6 @@ export default function ProjectPage(){
 
     return (
         <div>
-            <Projects projects = {projects} handleOpen={openEditModal} handleDelete={handleDeleteProject}/>
             <Button 
                 onClick={openModal}
                 type = "primary"
@@ -79,6 +80,7 @@ export default function ProjectPage(){
             >
                     Добавить проект
             </Button>
+            <Projects projects = {projects} handleOpen={openEditModal} handleDelete={handleDeleteProject}/>
             <CreateUpdateProject
             mode={mode}
             values={values}

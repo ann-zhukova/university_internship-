@@ -17,6 +17,7 @@ export const Projects = ({projects, handleOpen, handleDelete}:Props) =>{
                     bordered = {false}
                 >
                 <p>Статус: {project.status ? 'Закончен' : 'В работе'}</p>
+                <p>Количество задач: {project.numberOfTask}</p>
                 <div className="card_buttons">
                 <Button 
                     onClick={()=>handleOpen(project)}

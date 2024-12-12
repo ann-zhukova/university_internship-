@@ -15,6 +15,7 @@ export const getAllTasks = async() => {
 
 export const createTask = async(taskRequest:TaskRequest) => {
     const formData = new FormData();
+    console.log(taskRequest);
     formData.append('name', taskRequest.name);
     formData.append('status', taskRequest.status ? 'true' : 'false');
     formData.append('description', taskRequest.description ?? '');
@@ -42,6 +43,8 @@ export const createTask = async(taskRequest:TaskRequest) => {
 
 export const updateTask = async(id: number ,taskRequest:TaskRequest) => {
     const formData = new FormData();
+    console.log(id +':');
+    console.log(taskRequest);
     formData.append('name', taskRequest.name);
     formData.append('status', taskRequest.status ? 'true' : 'false');
     formData.append('description', taskRequest.description ?? '');
@@ -58,6 +61,7 @@ export const updateTask = async(id: number ,taskRequest:TaskRequest) => {
         formData.append('workers', worker.toString());
       });
     }
+    try{
     const response = await fetch(`http://localhost:5081/TaskControllers/${id}`,
         {
             method : "PUT",
@@ -65,6 +69,11 @@ export const updateTask = async(id: number ,taskRequest:TaskRequest) => {
         }
     );
     return response;
+  }
+  catch(error)
+  {
+    console.log(error);
+  }
 }
 
 export const deleteTask = async(id: number) => {

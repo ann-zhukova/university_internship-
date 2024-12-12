@@ -18,9 +18,9 @@ export const Tasks = ({tasks, handleOpen, handleDelete}:Props) =>{
                 <p>Описание {task.description}</p>
                 <p>Дата начала {task.startDate}</p>
                 <p>Дата окончания {task.endDate}</p>
-                <p>Проект : {task.project}</p>
-                {task.workers.length != 0 && <p>Исполнители:  {task.workers.join(', ')}</p>}
-                {task.dependsOnTask && <p>Зависит от задачи: {task.dependsOnTask}</p>}
+                <p>Проект : {task.project.name}</p>
+                {task.workers.length != 0 && <p>Исполнители:  {task.workers.map(worker => worker.name).join(', ')}</p>}
+                {task.dependsOnTask && <p>Зависит от задачи: {task.dependsOnTask.name}</p>}
                 <p>Статус: {task.status ? 'Закончен' : 'В работе'}</p>
                 <div className="card_buttons">
                     <Button 

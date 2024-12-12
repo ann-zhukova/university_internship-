@@ -8,8 +8,8 @@
        DateOnly? startDate, 
        DateOnly? endDate, 
        bool? status, 
-       string? dependsontask, 
-       string? project, 
-       List<string>? workers
+       TaskDependsResponse? dependsontask, 
+       TaskProjectResponse? project, 
+       List<TaskWorkerResponse>? workers
     );
 }

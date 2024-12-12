@@ -16,22 +16,29 @@ namespace PlanningAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TaskResponse>>> GetProjects()
+        public async Task<ActionResult<List<TaskResponse>>> GetTasks()
         {
             var tasks = await _taskRepository.GetWithWorkers();
-            var response = tasks.Select(
-                t => new TaskResponse(
-                    t.Id, 
-                    t.Name, 
-                    t.Description, 
-                    t.StartDate, 
-                    t.EndDate,
-                    t.Status, 
-                    t.DependsontaskNavigation?.Name, 
-                    t.ProjectNavigation?.Name, 
-                    t.Workers?.Select(w => w.Name).ToList()
-                    )
-                );
+            var response = tasks.Select(t => new TaskResponse(
+                t.Id, 
+                t.Name, 
+                t.Description, 
+                t.StartDate, 
+                t.EndDate,
+                t.Status, 
+                new TaskDependsResponse(
+                    t.DependsontaskNavigation?.Id, 
+                    t.DependsontaskNavigation?.Name
+                ),
+                new TaskProjectResponse(
+                    t.ProjectNavigation?.Id, 
+                    t.ProjectNavigation?.Name
+                ),
+                t.Workers?.Select(w => new TaskWorkerResponse(
+                    w.Id,
+                    w.Name
+                )).ToList()
+            )).ToList();
             return Ok(response);
         }
 

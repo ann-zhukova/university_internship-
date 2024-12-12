@@ -49,18 +49,46 @@ namespace PlanningAPI.Repository
 
         public async System.Threading.Tasks.Task Update(int id, TaskRequest taskRequest)
         {
-            var workers = await _dbContext.Workers.Where(w => taskRequest.workers.Contains(w.Id)).ToListAsync();
-            await _dbContext.Tasks.Where(t => t.Id == id).ExecuteUpdateAsync(
-                s => s.
-                SetProperty(t => t.Name, t => taskRequest.name).
-                SetProperty(t => t.Description, t => taskRequest.description).
-                SetProperty(t => t.StartDate, t => DateOnly.ParseExact(taskRequest.startDate, "yyyy-MM-dd")).
-                SetProperty(t => t.EndDate, t => DateOnly.ParseExact(taskRequest.endDate, "yyyy-MM-dd")).
-                SetProperty(t => t.Status, t => taskRequest.status).
-                SetProperty(t => t.Dependsontask, t => taskRequest.dependsontask).
-                SetProperty(t => t.Project, t => taskRequest.project).
-                SetProperty(t => t.Workers, t => workers)
-                );
+            // Retrieve the workers based on the provided IDs in taskRequest
+            List<Worker> workers;
+
+            if (taskRequest.workers != null && taskRequest.workers.Any())
+            {
+                workers = await _dbContext.Workers
+                    .Where(w => taskRequest.workers.Contains(w.Id))
+                    .ToListAsync();
+            }
+            else
+            {
+                workers = new List<Worker>(); // Initialize as an empty list instead of null
+            }
+
+            // Find the task to update
+            var taskToUpdate = await _dbContext.Tasks
+                .Include(t => t.Workers) // Include the Workers collection
+                .FirstOrDefaultAsync(t => t.Id == id);
+    
+            if (taskToUpdate == null)
+            {
+                throw new Exception("Task not found");
+            }
+
+            // Update the task properties
+            taskToUpdate.Name = taskRequest.name;
+            taskToUpdate.Description = taskRequest.description;
+            taskToUpdate.StartDate = DateOnly.ParseExact(taskRequest.startDate, "yyyy-MM-dd");
+            taskToUpdate.EndDate = DateOnly.ParseExact(taskRequest.endDate, "yyyy-MM-dd");
+            taskToUpdate.Status = taskRequest.status;
+            taskToUpdate.Dependsontask = taskRequest.dependsontask;
+            taskToUpdate.Project = taskRequest.project;
+
+            // Clear existing workers and add new ones
+            taskToUpdate.Workers.Clear(); // Clear existing workers
+            foreach (var worker in workers)
+            {
+                taskToUpdate.Workers.Add(worker); // Add each worker
+            }
+            // Save changes to the database
             await _dbContext.SaveChangesAsync();
         }
         public async System.Threading.Tasks.Task Delete(int id)

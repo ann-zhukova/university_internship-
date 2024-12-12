@@ -68,7 +68,6 @@ export default function TaskPage(){
     }
     return (
         <div>
-            <Tasks tasks = {tasks} handleDelete={handleDeleteTask} handleOpen={openEditModal}/>
             <Button 
                 onClick={openModal}
                 type = "primary"
@@ -77,6 +76,8 @@ export default function TaskPage(){
             >
                     Добавить задачу
             </Button>
+            <Tasks tasks = {tasks} handleDelete={handleDeleteTask} handleOpen={openEditModal}/>
+        
             <CreateUpdateTask
             mode={mode}
             values={values}

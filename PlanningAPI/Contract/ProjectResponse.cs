@@ -4,6 +4,7 @@
     (
         int id,
         string? name, 
-        bool? status
+        bool? status,
+        int? numberOfTask
     );
 }

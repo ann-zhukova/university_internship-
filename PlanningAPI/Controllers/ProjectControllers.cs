@@ -24,8 +24,14 @@ namespace PlanningAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ProjectResponse>>> GetProjects()
         {
-            var projects = await _projectRepository.Get();
-            var response = projects.Select(p => new ProjectResponse(p.Id, p.Name, p.Status));
+            var projects = await _projectRepository.GetWithTask();
+            var response = projects.Select(p => 
+                new ProjectResponse(
+                    p.Id, 
+                    p.Name, 
+                    p.Status,
+                    p.Tasks.Count
+                    ));
             return Ok(response);
         }
 
@@ -56,7 +62,7 @@ namespace PlanningAPI.Controllers
             }
         }
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult> UpdateProject(int id)
+        public async Task<ActionResult> DeleteProject(int id)
         {
             try
             {

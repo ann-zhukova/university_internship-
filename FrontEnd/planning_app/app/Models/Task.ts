@@ -5,7 +5,11 @@ interface Task {
     startDate: string;
     endDate: string;
     status: boolean;
-    dependsOnTask: string;
-    project: string;
-    workers: string[];
+    dependsOnTask: TaskDepends;
+    project: TaskProject;
+    workers: TaskWorker[];
+}
+interface TaskDepends{
+    id: number;
+    name: string;
 }
